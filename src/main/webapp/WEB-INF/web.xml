@@ -4,4 +4,37 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
+  <display-name>Archetype Created Web Application</display-name>
+
+  <!-- Servlets -->
+
+  <servlet>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>controller.UserRestControllerV1</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>FileServlet</servlet-name>
+    <servlet-class>controller.FileRestControllerV1</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>EventServlet</servlet-name>
+    <servlet-class>controller.EventRestControllerV1</servlet-class>
+  </servlet>
+
+  <!-- Mapping -->
+
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/api/v1/users/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FileServlet</servlet-name>
+    <url-pattern>/api/v1/files/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EventServlet</servlet-name>
+    <url-pattern>/api/v1/events/*</url-pattern>
+  </servlet-mapping>
+
 </web-app>
