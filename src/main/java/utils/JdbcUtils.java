@@ -37,7 +37,7 @@ public class JdbcUtils {
 
     public static PreparedStatement getPreparedStatement(String sql) {
         try {
-            return getInstance().prepareStatement(sql);
+            return getInstance().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         } catch (SQLException e) {
             e.printStackTrace();
         }
