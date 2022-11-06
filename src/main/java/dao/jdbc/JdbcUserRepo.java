@@ -1,4 +1,4 @@
-package repository.jdbc;
+package dao.jdbc;
 
 import model.User;
 

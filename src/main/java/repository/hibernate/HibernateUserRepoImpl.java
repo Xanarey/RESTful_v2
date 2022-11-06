@@ -4,7 +4,7 @@ import model.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import repository.UserRepo;
-import repository.jdbc.JdbcImpl.JdbcUserRepoImpl;
+import dao.jdbc.jdbcImpl.JdbcUserRepoImpl;
 import utils.HibernateUtil;
 
 import java.util.List;

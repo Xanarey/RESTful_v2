@@ -1,39 +1,27 @@
 package repository.hibernate;
 
+import dao.jdbc.JdbcFileRepo;
+import dao.jdbc.jdbcImpl.JdbcFileRepoImpl;
 import model.File;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import repository.FileRepo;
 import utils.HibernateUtil;
 
-import java.util.Collections;
 import java.util.List;
 
 public class HibernateFileRepoImpl implements FileRepo {
 
+    private final JdbcFileRepo jdbcFileRepo = new JdbcFileRepoImpl();
+
     @Override
     public File getById(Long id) {
-        File file = new File();
-        try (Session session = HibernateUtil.getSession()){
-            session.get(File.class, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return file;
+        return jdbcFileRepo.getById(id);
     }
 
     @Override
     public List<File> getAll() {
-        List<File> fileList;
-        Transaction transaction;
-        try(Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
-            fileList = session.createQuery("FROM File", File.class).list();
-            transaction.commit();
-        } catch (Throwable t) {
-            return Collections.emptyList();
-        }
-        return fileList;
+        return jdbcFileRepo.getAll();
     }
 
     @Override
