@@ -19,6 +19,10 @@
     <servlet-name>EventServlet</servlet-name>
     <servlet-class>controller.EventRestControllerV1</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>FileManagerServlet</servlet-name>
+    <servlet-class>controller.FileManagerRestControllerV1</servlet-class>
+  </servlet>
 
   <!-- Mapping -->
 
@@ -33,6 +37,10 @@
   <servlet-mapping>
     <servlet-name>EventServlet</servlet-name>
     <url-pattern>/api/v1/events/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FileManagerServlet</servlet-name>
+    <url-pattern>/api/v1/fileManager/*</url-pattern>
   </servlet-mapping>
 
 </web-app>
