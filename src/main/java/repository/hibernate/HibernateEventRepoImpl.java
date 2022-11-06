@@ -28,7 +28,7 @@ public class HibernateEventRepoImpl implements EventRepo {
         Transaction transaction;
         try(Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            eventList = session.createQuery("FROM Event ", Event.class).list();
+            eventList = session.createQuery("FROM events", Event.class).getResultList();
             transaction.commit();
         } catch (Throwable t) {
             return Collections.emptyList();

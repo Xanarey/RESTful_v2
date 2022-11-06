@@ -4,40 +4,23 @@ import model.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import repository.UserRepo;
+import repository.jdbc.JdbcImpl.JdbcUserRepoImpl;
 import utils.HibernateUtil;
 
-import java.util.Collections;
 import java.util.List;
 
 public class HibernateUserRepoImpl implements UserRepo {
 
+    private final JdbcUserRepoImpl jdbcUserRepo = new JdbcUserRepoImpl();
+
     @Override
     public User getById(Long id) {
-        User user = new User();
-        try (Session session = HibernateUtil.getSession()){
-            user = (User) session
-                    .createQuery("SELECT d FROM User d JOIN FETCH d.events WHERE d.id = (:id)")
-                    .setParameter("id", id)
-                    .getSingleResult();
-//            user = session.get(User.class, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return user;
+        return jdbcUserRepo.getById(id);
     }
 
     @Override
     public List<User> getAll() {
-        List<User> userList;
-        Transaction transaction;
-        try(Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
-            userList = session.createQuery("FROM User", User.class).list();
-            transaction.commit();
-        } catch (Throwable t) {
-            return Collections.emptyList();
-        }
-        return userList;
+        return jdbcUserRepo.getAll();
     }
 
     @Override
@@ -71,4 +54,5 @@ public class HibernateUserRepoImpl implements UserRepo {
         insert(user);
         return user;
     }
+
 }
