@@ -20,8 +20,12 @@
     <servlet-class>controller.EventRestControllerV1</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>FileManagerServlet</servlet-name>
-    <servlet-class>controller.FileManagerRestControllerV1</servlet-class>
+    <servlet-name>FileDownloadServlet</servlet-name>
+    <servlet-class>controller.FileDownloadRestControllerV1</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <servlet-class>controller.FileUploadRestControllerV1</servlet-class>
   </servlet>
 
   <!-- Mapping -->
@@ -39,8 +43,12 @@
     <url-pattern>/api/v1/events/*</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>FileManagerServlet</servlet-name>
-    <url-pattern>/api/v1/fileManager/*</url-pattern>
+    <servlet-name>FileDownloadServlet</servlet-name>
+    <url-pattern>/api/v1/fileDownload/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <url-pattern>/api/v1/fileUpload/*</url-pattern>
   </servlet-mapping>
 
 </web-app>
