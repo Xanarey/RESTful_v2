@@ -38,7 +38,7 @@
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-      <version>2.10</version>
+      <version>${gson.version}</version>
     </dependency>
     <!-- JSON -->
     <dependency>
@@ -100,7 +100,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>RELEASE</version>
+      <version>${lombok.version}</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>

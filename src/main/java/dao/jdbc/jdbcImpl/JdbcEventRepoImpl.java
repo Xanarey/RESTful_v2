@@ -17,7 +17,7 @@ public class JdbcEventRepoImpl implements JdbcEventRepo {
     @Override
     public Event getById(Long aLong) {
         Event event = Event.builder().build();
-        String sqlQuery = "SELECT id, created, updated FROM events WHERE id = ?";
+        String sqlQuery = "SELECT id, created, updated FROM events WHERE id = ?;";
 
         try(PreparedStatement ps = JdbcUtils.getPreparedStatement(sqlQuery)) {
             ps.setLong(1, aLong);

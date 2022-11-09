@@ -14,10 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(
-        name = "FileServlet",
-        urlPatterns = "/api/v1/files/*"
-)
+@WebServlet(name = "FileServlet", urlPatterns = "/api/v1/files/*")
 public class FileRestControllerV1 extends HttpServlet {
 
     private final FileService fileService = new FileService();

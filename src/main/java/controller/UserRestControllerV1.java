@@ -12,10 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(
-        name = "UserServlet",
-        urlPatterns = "/api/v1/users/*"
-)
+@WebServlet(name = "UserServlet", urlPatterns = "/api/v1/users/*")
 public class UserRestControllerV1 extends HttpServlet {
 
     private final UserService userService = new UserService();

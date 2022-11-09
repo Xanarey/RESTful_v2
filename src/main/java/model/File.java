@@ -2,11 +2,13 @@ package model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "files", schema = "postgres")
@@ -20,7 +22,10 @@ public class File {
     @Column(name = "url")
     private String url;
 
-    @OneToOne(mappedBy = "file", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(
+            mappedBy = "file",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     private Event event;
 
 }

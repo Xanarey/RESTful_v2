@@ -12,15 +12,7 @@ import java.io.IOException;
 @WebServlet(name = "FileDownloadServlet", urlPatterns = "/api/v1/fileDownload/*")
 @MultipartConfig(location = "C:/Users/Пользователь/Desktop/fileDesktop")
 public class FileDownloadRestControllerV1 extends HttpServlet{
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        for (Part part: request.getParts()) {
-            part.write(part.getSubmittedFileName());
-        }
+        for (Part part: request.getParts()) part.write(part.getSubmittedFileName());
     }
-
 }
