@@ -6,11 +6,7 @@ import model.Event;
 import model.File;
 import model.User;
 import repository.EventRepo;
-import repository.FileRepo;
-import repository.UserRepo;
 import repository.hibernate.HibernateEventRepoImpl;
-import repository.hibernate.HibernateFileRepoImpl;
-import repository.hibernate.HibernateUserRepoImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -29,8 +25,6 @@ import java.util.Calendar;
 public class FileUploadRestControllerV1 extends HttpServlet {
 
     private final EventRepo eventRepo = new HibernateEventRepoImpl();
-    private final UserRepo userRepo = new HibernateUserRepoImpl();
-    private final FileRepo fileRepo = new HibernateFileRepoImpl();
     private final JdbcUserRepo jdbcUserRepo = new JdbcUserRepoImpl();
     private final String timeStamp = new SimpleDateFormat("dd.MM.yy").format(Calendar.getInstance().getTime());
 
@@ -46,7 +40,6 @@ public class FileUploadRestControllerV1 extends HttpServlet {
         event.setCreated(timeStamp);
         event.setUser(new User(user.getId(), "", new ArrayList<>()));
         eventRepo.insert(event);
-
 
         for (Part part: request.getParts()) part.write(part.getSubmittedFileName());
     }
