@@ -39,7 +39,8 @@ public class HibernateEventRepoImpl implements EventRepo {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()){
             transaction = session.beginTransaction();
-            session.merge(event);
+            Event mergeEvent = session.merge(event);
+            event = mergeEvent;
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null)
