@@ -23,9 +23,7 @@ public class File {
     private String url;
 
     @OneToOne(
-            mappedBy = "file",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            mappedBy = "file")
     private Event event;
 
 }

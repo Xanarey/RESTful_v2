@@ -13,6 +13,7 @@ import java.io.IOException;
 @MultipartConfig(location = "C:/Users/Пользователь/Desktop/fileDesktop")
 public class FileDownloadRestControllerV1 extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //TODO не дописал
         for (Part part: request.getParts()) part.write(part.getSubmittedFileName());
     }
 }

@@ -1,8 +1,8 @@
 package dao.jdbc.jdbcImpl;
 
+import dao.JdbcUserRepo;
 import model.Event;
 import model.User;
-import dao.jdbc.JdbcUserRepo;
 import utils.JdbcUtils;
 
 import java.sql.PreparedStatement;

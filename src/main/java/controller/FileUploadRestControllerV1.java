@@ -1,6 +1,6 @@
 package controller;
 
-import dao.jdbc.JdbcUserRepo;
+import dao.JdbcUserRepo;
 import dao.jdbc.jdbcImpl.JdbcUserRepoImpl;
 import model.Event;
 import model.File;
@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 @WebServlet(name = "FileUploadServlet", urlPatterns = "/api/v1/fileUpload/*")
-@MultipartConfig(location = "C:/Users/Пользователь/Desktop/fileStorage")
+@MultipartConfig(location = "/Users/timurbrek/Desktop/localStorage")
 public class FileUploadRestControllerV1 extends HttpServlet {
 
     private final EventRepo eventRepo = new HibernateEventRepoImpl();
@@ -39,15 +39,21 @@ public class FileUploadRestControllerV1 extends HttpServlet {
         File file = File.builder().build();
 
         file.setName(request.getParameter("name"));
-        file.setUrl("C:/Users/Пользователь/Desktop/fileDesktop");
+        file.setUrl("/Users/timurbrek/Desktop/localStorage");
         file.setEvent(event);
 
-        event.setCreated(timeStamp);
-        event.setFile(file);
-        event.setUser(user);
-
         user.getEvents().add(event);
-        userRepo.update(user);
+
+        event.setCreated(timeStamp);
+        event.setUser(user);
+        event.setFile(file);
+
+
+
+        eventRepo.insert(event);
+
+
+
 
 
 

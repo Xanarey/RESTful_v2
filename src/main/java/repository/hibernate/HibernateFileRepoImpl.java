@@ -1,6 +1,6 @@
 package repository.hibernate;
 
-import dao.jdbc.JdbcFileRepo;
+import dao.JdbcFileRepo;
 import dao.jdbc.jdbcImpl.JdbcFileRepoImpl;
 import model.File;
 import org.hibernate.Session;

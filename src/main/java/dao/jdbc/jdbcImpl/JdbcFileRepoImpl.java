@@ -1,6 +1,6 @@
 package dao.jdbc.jdbcImpl;
 
-import dao.jdbc.JdbcFileRepo;
+import dao.JdbcFileRepo;
 import model.File;
 import utils.JdbcUtils;
 

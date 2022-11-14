@@ -1,8 +1,6 @@
 package controller;
 
-import com.google.gson.Gson;
 import model.File;
-import model.User;
 import service.FileService;
 import utils.JsonConverter;
 
@@ -41,7 +39,7 @@ public class FileRestControllerV1 extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         File file = (File) jsonConverter.getObjectFromJsonString(request, File.class);
-        fileService.createFile(file);
+        fileService.updateFile(file);
     }
 
     @Override
