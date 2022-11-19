@@ -20,14 +20,19 @@ public class UserRestControllerV1 extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("id") != null) {
-            User user = userService.getById(Long.parseLong(request.getParameter("id")));
-            jsonConverter.getJsonStringFromObject(response, user);
-        }
-        if (request.getParameter("id") == null) {
-            List<User> userList = userService.getAllUsers();
-            jsonConverter.getJsonStringFromObject(response, userList);
-        }
+        String test = String.valueOf(request.getPart("id"));
+        User user = userService.getById(Long.parseLong(request.getParameter("id")));
+        user.setName(test);
+        jsonConverter.getJsonStringFromObject(response, user);
+//        if (request.getParameter("id") != null) {
+//            User user = userService.getById(Long.parseLong(request.getParameter("id")));
+//            user.setName(test);
+//            jsonConverter.getJsonStringFromObject(response, user);
+//        }
+//        if (request.getParameter("id") == null) {
+//            List<User> userList = userService.getAllUsers();
+//            jsonConverter.getJsonStringFromObject(response, userList);
+//        }
     }
 
     @Override
