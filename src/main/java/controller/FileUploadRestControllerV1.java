@@ -1,17 +1,4 @@
 package controller;
-
-import dao.JdbcUserRepo;
-import dao.jdbc.jdbcImpl.JdbcUserRepoImpl;
-import model.Event;
-import model.File;
-import model.User;
-import repository.EventRepo;
-import repository.FileRepo;
-import repository.UserRepo;
-import repository.hibernate.HibernateEventRepoImpl;
-import repository.hibernate.HibernateFileRepoImpl;
-import repository.hibernate.HibernateUserRepoImpl;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -27,39 +14,16 @@ import java.util.Calendar;
 @MultipartConfig(location = "/Users/timurbrek/Desktop/localStorage")
 public class FileUploadRestControllerV1 extends HttpServlet {
 
-    private final EventRepo eventRepo = new HibernateEventRepoImpl();
-    private final JdbcUserRepo jdbcUserRepo = new JdbcUserRepoImpl();
-    private final FileRepo fileRepo = new HibernateFileRepoImpl();
-    private final UserRepo userRepo = new HibernateUserRepoImpl();
     private final String timeStamp = new SimpleDateFormat("dd.MM.yy").format(Calendar.getInstance().getTime());
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = jdbcUserRepo.getById(Long.parseLong(request.getParameter("id")));
-        Event event = Event.builder().build();
-        File file = File.builder().build();
-
-        file.setName(request.getParameter("name"));
-        file.setUrl("/Users/timurbrek/Desktop/localStorage");
-        file.setEvent(event);
-
-        user.getEvents().add(event);
-
-        event.setCreated(timeStamp);
-        event.setUser(user);
-        event.setFile(file);
-
-
-
-        eventRepo.insert(event);
-
-
-
-
-
 
         for (Part part: request.getParts()) part.write(part.getSubmittedFileName());
     }
 }
 
-// TODO из параметров взять айдишник и отработать с эвентами и прочими вещами, чтобы при скачивании через указанныый id , вносились соответствующие изменения в БД + при обновлении
-// TODO из параметров взять айдишник и отработать с эвентами и прочими вещами, чтобы при изменении файла через указанныый id , вносились соответствующие изменения в БД
+// TODO из параметров взять айдишник и отработать с эвентами и прочими вещами,
+//  чтобы при скачивании через указанныый id , вносились соответствующие изменения
+//  в БД + при обновлении
+// TODO из параметров взять айдишник и отработать с эвентами и прочими вещами,
+//  чтобы при изменении файла через указанныый id , вносились соответствующие изменения в БД

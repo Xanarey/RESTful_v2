@@ -14,7 +14,7 @@ public class JsonConverter {
 
     private final Gson GSON = new Gson();
 
-    public void getJsonStringFromObject(HttpServletResponse response, Object object) throws IOException {
+    public static void getJsonStringFromObject(HttpServletResponse response, Object object) throws IOException {
         String jsonString = GSON.toJson(object);
         PrintWriter out = response.getWriter();
         response.setContentType("application/json; charset=UTF-8");
@@ -22,7 +22,7 @@ public class JsonConverter {
         out.flush();
     }
 
-    public Object getObjectFromJsonString(HttpServletRequest request, Object object) throws IOException {
+    public static Object getObjectFromJsonString(HttpServletRequest request, Object object) throws IOException {
         StringBuilder content;
         try (BufferedReader in = new BufferedReader(new InputStreamReader(request.getInputStream()))) {
             content = new StringBuilder();

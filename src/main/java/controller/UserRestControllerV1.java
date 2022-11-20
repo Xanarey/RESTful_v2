@@ -17,29 +17,28 @@ import java.util.List;
 public class UserRestControllerV1 extends HttpServlet {
 
     private final UserService userService = new UserService();
-    private final JsonConverter jsonConverter = new JsonConverter();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         StringBuilder result = RequestParser.requestParser(request);
         if (result.toString().equals("*")) {
             List<User> userList = userService.getAllUsers();
-            jsonConverter.getJsonStringFromObject(response, userList);
+            JsonConverter.getJsonStringFromObject(response, userList);
         } else {
             User user = userService.getById(Long.parseLong(result.toString()));
-            jsonConverter.getJsonStringFromObject(response, user);
+            JsonConverter.getJsonStringFromObject(response, user);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = (User) jsonConverter.getObjectFromJsonString(request, User.class);
+        User user = (User) JsonConverter.getObjectFromJsonString(request, User.class);
         userService.createUser(user);
     }
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = (User) jsonConverter.getObjectFromJsonString(request, User.class);
+        User user = (User) JsonConverter.getObjectFromJsonString(request, User.class);
         userService.updateUser(user);
     }
 

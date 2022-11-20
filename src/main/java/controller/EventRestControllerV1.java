@@ -18,29 +18,28 @@ import java.util.List;
 public class EventRestControllerV1 extends HttpServlet {
 
     private final EventService eventService = new EventService();
-    private final JsonConverter jsonConverter = new JsonConverter();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         StringBuilder result = RequestParser.requestParser(request);
         if (result.toString().equals("*")) {
             List<Event> eventList = eventService.getAllEvents();
-            jsonConverter.getJsonStringFromObject(response, eventList);
+            JsonConverter.getJsonStringFromObject(response, eventList);
         } else {
             Event event = eventService.getById(Long.parseLong(result.toString()));
-            jsonConverter.getJsonStringFromObject(response, event);
+            JsonConverter.getJsonStringFromObject(response, event);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Event event = (Event) jsonConverter.getObjectFromJsonString(request, Event.class);
+        Event event = (Event) JsonConverter.getObjectFromJsonString(request, Event.class);
         eventService.createEvent(event);
     }
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Event event = (Event) jsonConverter.getObjectFromJsonString(request, Event.class);
+        Event event = (Event) JsonConverter.getObjectFromJsonString(request, Event.class);
         eventService.createEvent(event);
     }
 
