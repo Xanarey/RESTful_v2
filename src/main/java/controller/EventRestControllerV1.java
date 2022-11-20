@@ -4,6 +4,7 @@ import model.Event;
 import model.User;
 import service.EventService;
 import utils.JsonConverter;
+import utils.RequestParser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,13 +22,13 @@ public class EventRestControllerV1 extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("id") != null) {
-            Event event = eventService.getById(Long.parseLong(request.getParameter("id")));
-            jsonConverter.getJsonStringFromObject(response, event);
-        }
-        if (request.getParameter("id") == null) {
+        StringBuilder result = RequestParser.requestParser(request);
+        if (result.toString().equals("*")) {
             List<Event> eventList = eventService.getAllEvents();
             jsonConverter.getJsonStringFromObject(response, eventList);
+        } else {
+            Event event = eventService.getById(Long.parseLong(result.toString()));
+            jsonConverter.getJsonStringFromObject(response, event);
         }
     }
 

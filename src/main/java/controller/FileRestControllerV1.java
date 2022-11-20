@@ -1,8 +1,10 @@
 package controller;
 
+import model.Event;
 import model.File;
 import service.FileService;
 import utils.JsonConverter;
+import utils.RequestParser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,13 +22,13 @@ public class FileRestControllerV1 extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("id") != null) {
-            File file = fileService.getById(Long.parseLong(request.getParameter("id")));
-            jsonConverter.getJsonStringFromObject(response, file);
-        }
-        if (request.getParameter("id") == null) {
+        StringBuilder result = RequestParser.requestParser(request);
+        if (result.toString().equals("*")) {
             List<File> fileList = fileService.getAllFiles();
             jsonConverter.getJsonStringFromObject(response, fileList);
+        } else {
+            File file = fileService.getById(Long.parseLong(result.toString()));
+            jsonConverter.getJsonStringFromObject(response, file);
         }
     }
 

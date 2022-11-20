@@ -3,6 +3,7 @@ package controller;
 import model.User;
 import service.UserService;
 import utils.JsonConverter;
+import utils.RequestParser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,19 +21,14 @@ public class UserRestControllerV1 extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String test = String.valueOf(request.getPart("id"));
-        User user = userService.getById(Long.parseLong(request.getParameter("id")));
-        user.setName(test);
-        jsonConverter.getJsonStringFromObject(response, user);
-//        if (request.getParameter("id") != null) {
-//            User user = userService.getById(Long.parseLong(request.getParameter("id")));
-//            user.setName(test);
-//            jsonConverter.getJsonStringFromObject(response, user);
-//        }
-//        if (request.getParameter("id") == null) {
-//            List<User> userList = userService.getAllUsers();
-//            jsonConverter.getJsonStringFromObject(response, userList);
-//        }
+        StringBuilder result = RequestParser.requestParser(request);
+        if (result.toString().equals("*")) {
+            List<User> userList = userService.getAllUsers();
+            jsonConverter.getJsonStringFromObject(response, userList);
+        } else {
+            User user = userService.getById(Long.parseLong(result.toString()));
+            jsonConverter.getJsonStringFromObject(response, user);
+        }
     }
 
     @Override
@@ -51,4 +47,6 @@ public class UserRestControllerV1 extends HttpServlet {
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         userService.deleteById(Long.parseLong(request.getParameter("id")));
     }
+
+
 }
