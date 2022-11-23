@@ -45,6 +45,7 @@ public class EventRestControllerV1 extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        eventService.deleteById(Long.parseLong(request.getParameter("id")));
+        StringBuilder result = RequestParser.requestParser(request);
+        eventService.deleteById(Long.parseLong(result.toString()));
     }
 }

@@ -12,7 +12,7 @@ import java.lang.reflect.Type;
 
 public class JsonConverter {
 
-    private final Gson GSON = new Gson();
+    private static final Gson GSON = new Gson();
 
     public static void getJsonStringFromObject(HttpServletResponse response, Object object) throws IOException {
         String jsonString = GSON.toJson(object);

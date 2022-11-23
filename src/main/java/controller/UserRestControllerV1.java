@@ -44,8 +44,8 @@ public class UserRestControllerV1 extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        userService.deleteById(Long.parseLong(request.getParameter("id")));
+        StringBuilder result = RequestParser.requestParser(request);
+        userService.deleteById(Long.parseLong(result.toString()));
     }
-
 
 }
