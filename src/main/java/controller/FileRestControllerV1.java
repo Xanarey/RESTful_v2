@@ -5,14 +5,15 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import service.FileService;
+import utils.RequestParser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "FileServlet", urlPatterns = "/api/v1/files/*")
@@ -20,14 +21,27 @@ import java.util.List;
 public class FileRestControllerV1 extends HttpServlet {
 
     private final FileService fileService = new FileService();
+    public static int BUFFER_SIZE = 1024 * 100;
+    public static final String UPLOAD_DIR = "C:/Users/Пользователь/Desktop/fileStorage/";
 
     DiskFileItemFactory factory = new DiskFileItemFactory();
     ServletFileUpload upload = new ServletFileUpload(factory);
-    String ud = "C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload";
+    String ud = "C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload/1.txt";
 
+
+    @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        StringBuilder stringBuilder = RequestParser.requestParser(request);
+        if (stringBuilder.toString().equals("*")) {
+            List<String> list = new ArrayList<>();
+            for (model.File file: fileService.getAllFiles())
+                list.add(file.getUrl());
+            response.getWriter().println(list);
 
+        } else {
+            response.getWriter().println(fileService.getById(Long.parseLong(stringBuilder.toString())).getUrl());
+        }
     }
 
     @SneakyThrows
@@ -49,7 +63,6 @@ public class FileRestControllerV1 extends HttpServlet {
         }
 
         if (ServletFileUpload.isMultipartContent(request)) {
-            //...
             List<FileItem> formItems = upload.parseRequest(request);
             if (formItems != null && formItems.size() > 0) {
                 for (FileItem item : formItems) {
@@ -58,8 +71,6 @@ public class FileRestControllerV1 extends HttpServlet {
                         String filePath = ud + File.separator + fileName;
                         File storeFile = new File(filePath);
                         item.write(storeFile);
-                        request.setAttribute("message", "File "
-                                + fileName + " has uploaded successfully!");
                     }
                 }
             }
