@@ -21,13 +21,10 @@ import java.util.List;
 public class FileRestControllerV1 extends HttpServlet {
 
     private final FileService fileService = new FileService();
-    public static int BUFFER_SIZE = 1024 * 100;
-    public static final String UPLOAD_DIR = "C:/Users/Пользователь/Desktop/fileStorage/";
 
     DiskFileItemFactory factory = new DiskFileItemFactory();
     ServletFileUpload upload = new ServletFileUpload(factory);
-    String ud = "C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload/1.txt";
-
+    String ud = "C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload";
 
     @SneakyThrows
     @Override
@@ -50,7 +47,6 @@ public class FileRestControllerV1 extends HttpServlet {
         if (ServletFileUpload.isMultipartContent(request)) {
             factory.setSizeThreshold(1024 * 1024);
             factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
-
 
             upload.setFileSizeMax(1024 * 1024 * 5);
             upload.setSizeMax(1024 * 1024 * 5 * 5);
@@ -77,14 +73,20 @@ public class FileRestControllerV1 extends HttpServlet {
         }
     }
 
+    @SneakyThrows
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doPost(request, response);
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        StringBuilder id = RequestParser.requestParser(request);
+        String url = fileService.getById(Long.parseLong(id.toString())).getUrl();
 
+        File deleteFile = new File(url);
+        if( deleteFile.exists() )
+            deleteFile.delete() ;
     }
 
 }
