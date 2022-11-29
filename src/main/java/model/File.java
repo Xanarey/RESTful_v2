@@ -1,16 +1,13 @@
 package model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "files", schema = "postgres")
 public class File {
 
@@ -25,5 +22,4 @@ public class File {
     @OneToOne(
             mappedBy = "file")
     private Event event;
-
 }

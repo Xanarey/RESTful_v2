@@ -4,23 +4,32 @@ import model.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import repository.UserRepo;
-import dao.jdbc.jdbcImpl.JdbcUserRepoImpl;
 import utils.HibernateUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 public class HibernateUserRepoImpl implements UserRepo {
 
-    private final JdbcUserRepoImpl jdbcUserRepo = new JdbcUserRepoImpl();
-
     @Override
     public User getById(Long id) {
-        return jdbcUserRepo.getById(id);
+        try(Session session = HibernateUtil.getSession()) {
+            return session.get(User.class, id);
+        }
     }
 
     @Override
     public List<User> getAll() {
-        return jdbcUserRepo.getAll();
+        List<User> userList;
+        Transaction transaction;
+        try(Session session = HibernateUtil.getSession()) {
+            transaction = session.beginTransaction();
+            userList = session.createQuery("FROM User", User.class).list();
+            transaction.commit();
+        } catch (Throwable t) {
+            return Collections.emptyList();
+        }
+        return userList;
     }
 
     @Override

@@ -1,26 +1,35 @@
 package repository.hibernate;
 
-import dao.jdbc.jdbcImpl.JdbcEventRepoImpl;
 import model.Event;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import repository.EventRepo;
 import utils.HibernateUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 public class HibernateEventRepoImpl implements EventRepo {
 
-    private final JdbcEventRepoImpl jdbcEventRepo = new JdbcEventRepoImpl();
-
     @Override
     public Event getById(Long id) {
-        return jdbcEventRepo.getById(id);
+        try(Session session = HibernateUtil.getSession()) {
+            return session.get(Event.class, id);
+        }
     }
 
     @Override
     public List<Event> getAll() {
-        return jdbcEventRepo.getAll();
+        List<Event> eventList;
+        Transaction transaction;
+        try(Session session = HibernateUtil.getSession()) {
+            transaction = session.beginTransaction();
+            eventList = session.createQuery("FROM Event", Event.class).list();
+            transaction.commit();
+        } catch (Throwable t) {
+            return Collections.emptyList();
+        }
+        return eventList;
     }
 
     @Override

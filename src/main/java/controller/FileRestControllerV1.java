@@ -1,5 +1,6 @@
 package controller;
 
+import dto.FileDto;
 import lombok.SneakyThrows;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -33,11 +34,11 @@ public class FileRestControllerV1 extends HttpServlet {
         if (stringBuilder.toString().equals("*")) {
             List<String> list = new ArrayList<>();
             for (model.File file: fileService.getAllFiles())
-                list.add(file.getUrl());
+                list.add(FileDto.fromEntity(file).getUrl());
             response.getWriter().println(list);
-
         } else {
-            response.getWriter().println(fileService.getById(Long.parseLong(stringBuilder.toString())).getUrl());
+            FileDto fileDto = FileDto.fromEntity(fileService.getById(Long.parseLong(stringBuilder.toString())));
+            response.getWriter().println(fileDto.getUrl());
         }
     }
 
