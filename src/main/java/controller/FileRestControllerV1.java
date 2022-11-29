@@ -2,10 +2,13 @@ package controller;
 
 import dto.FileDto;
 import lombok.SneakyThrows;
+import model.Event;
+import model.User;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import service.FileService;
+import service.UserService;
 import utils.RequestParser;
 
 import javax.servlet.ServletException;
@@ -22,10 +25,11 @@ import java.util.List;
 public class FileRestControllerV1 extends HttpServlet {
 
     private final FileService fileService = new FileService();
+    private final UserService userService = new UserService();
 
     DiskFileItemFactory factory = new DiskFileItemFactory();
     ServletFileUpload upload = new ServletFileUpload(factory);
-    String ud = "C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload";
+    String ud = "C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload/";
 
     @SneakyThrows
     @Override
@@ -72,6 +76,21 @@ public class FileRestControllerV1 extends HttpServlet {
                 }
             }
         }
+
+        User user = userService.getById(Long.parseLong(RequestParser.requestParser(request).toString()));
+        model.File file = new model.File();
+        file.setName("not name");
+        file.setUrl(ud + "not name");
+        Event event = new Event();
+
+        event.setCreated("29.11.22");
+        event.setUpdated("");
+        event.setUser(user);
+        event.setFile(file);
+
+        user.getEvents().add(event);
+
+        userService.updateUser(user);
     }
 
     @SneakyThrows
