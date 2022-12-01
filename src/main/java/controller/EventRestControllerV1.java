@@ -2,12 +2,10 @@ package controller;
 
 import dto.EventDto;
 import model.Event;
-import model.User;
 import service.EventService;
 import utils.JsonConverter;
 import utils.RequestParser;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

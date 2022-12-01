@@ -1,26 +1,19 @@
 package controller;
 
-import dto.EventDto;
 import dto.FileDto;
-import dto.UserDto;
 import lombok.SneakyThrows;
-import model.Event;
-import model.User;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import service.FileService;
-import service.UserService;
+import utils.FileHelper;
 import utils.RequestParser;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +22,10 @@ import java.util.List;
 public class FileRestControllerV1 extends HttpServlet {
 
     private final FileService fileService = new FileService();
-    private final UserService userService = new UserService();
 
     @SneakyThrows
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         StringBuilder stringBuilder = RequestParser.requestParser(request);
         if (stringBuilder.toString().equals("*")) {
             List<String> list = new ArrayList<>();
@@ -48,7 +40,7 @@ public class FileRestControllerV1 extends HttpServlet {
 
     @SneakyThrows
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload upload = new ServletFileUpload(factory);
         String uploadDirectory = "C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload/";
@@ -71,7 +63,7 @@ public class FileRestControllerV1 extends HttpServlet {
         if (ServletFileUpload.isMultipartContent(request)) {
             List<FileItem> formItems = upload.parseRequest(request);
             fileRealName = formItems.get(0).getName();
-            if (formItems != null && formItems.size() > 0) {
+            if (formItems.size() > 0) {
                 for (FileItem item : formItems) {
                     if (!item.isFormField()) {
                         String fileName = new File(item.getName()).getName();
@@ -82,55 +74,17 @@ public class FileRestControllerV1 extends HttpServlet {
                 }
             }
         }
-
-        User user = userService.getById(Long.valueOf(request.getHeader("id")));
-        model.File file = new model.File();
-        Event event = new Event();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime localDateTime = LocalDateTime.now();
-        String time = localDateTime.format(formatter);
-
-        file.setName(fileRealName);
-        file.setUrl(uploadDirectory + fileRealName);
-
-        event.setCreated(time);
-        event.setUpdated(null);
-        event.setUser(user);
-        event.setFile(file);
-
-        user.getEvents().add(event);
-        userService.updateUser(user);
+        FileHelper.insertFileInfo(request, uploadDirectory, fileRealName);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @SneakyThrows
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) {
         doPost(request, response);
     }
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
         StringBuilder id = RequestParser.requestParser(request);
         String url = fileService.getById(Long.parseLong(id.toString())).getUrl();
 
@@ -138,5 +92,4 @@ public class FileRestControllerV1 extends HttpServlet {
         if( deleteFile.exists() )
             deleteFile.delete() ;
     }
-
 }
