@@ -83,17 +83,11 @@ public class FileRestControllerV1 extends HttpServlet {
             }
         }
 
-
-
-
-
-
         User user = userService.getById(Long.valueOf(request.getHeader("id")));
         model.File file = new model.File();
         Event event = new Event();
 
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime localDateTime = LocalDateTime.now();
         String time = localDateTime.format(formatter);
 
