@@ -12,7 +12,7 @@ public class FileDto {
     private String name;
     private String url;
 
-    public static FileDto fromEntity(File file) {
+    public static FileDto getEntity(File file) {
         return FileDto.builder()
                 .id(file.getId())
                 .name(file.getName())

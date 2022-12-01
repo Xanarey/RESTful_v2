@@ -3,6 +3,8 @@ package model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -21,10 +23,12 @@ public class Event {
     @Column(name = "updated")
     private String updated;
 
+    @ToString.Exclude
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ToString.Exclude
     @OneToOne(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)

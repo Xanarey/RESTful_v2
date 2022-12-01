@@ -9,17 +9,16 @@ import model.Event;
 public class EventDto {
 
     private Long id;
-//    private Long created;
-//    private Long updated;
-    private String created;
-    private String updated;
-//    private FileDto fileDto;
+    private Long created;
+    private Long updated;
+    private FileDto fileDto;
+    private UserDto userDto;
 
     public static EventDto getEntity(Event event) {
         return EventDto.builder()
                 .id(event.getId())
-                .created(event.getCreated())
-                .updated(event.getUpdated())
+                .created(Long.valueOf(event.getCreated()))
+                .updated(Long.valueOf(event.getUpdated()))
                 .build();
     }
 

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data

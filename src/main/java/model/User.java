@@ -19,6 +19,7 @@ public class User {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @ToString.Exclude
     @OneToMany(
             mappedBy = "user",
             fetch = FetchType.EAGER,

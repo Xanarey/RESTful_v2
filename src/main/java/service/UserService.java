@@ -10,9 +10,7 @@ public class UserService {
 
     private final UserRepo userRepo = new HibernateUserRepoImpl();
 
-    public User getById(Long id) {
-        return userRepo.getById(id);
-    }
+    public User getById(Long id) {return userRepo.getById(id);}
 
     public List<User> getAllUsers() {return userRepo.getAll();}
 

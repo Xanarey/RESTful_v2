@@ -1,8 +1,8 @@
 INSERT INTO postgres.files (id, name, url)
 VALUES
-(1,'1', '/Users/timurbrek/Desktop/storage/1'),
-(2,'2', '/Users/timurbrek/Desktop/storage/2'),
-(3,'3', '/Users/timurbrek/Desktop/storage/3'),
-(4,'4', '/Users/timurbrek/Desktop/storage/4'),
-(5,'5', '/Users/timurbrek/Desktop/storage/5'),
-(6,'6', '/Users/timurbrek/Desktop/storage/6');
+(1,'1.txt', 'C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload/1.txt'),
+(2,'2.txt', 'C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload/2.txt'),
+(3,'3.txt', 'C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload/3.txt'),
+(4,'4.txt', 'C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload/4.txt'),
+(5,'5.txt', 'C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload/5.txt'),
+(6,'6.txt', 'C:/Users/Пользователь/Desktop/RESTful_v2/src/main/resources/upload/6.txt');

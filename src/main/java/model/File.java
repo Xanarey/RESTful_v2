@@ -19,6 +19,7 @@ public class File {
     @Column(name = "url")
     private String url;
 
+    @ToString.Exclude
     @OneToOne(
             mappedBy = "file")
     private Event event;
