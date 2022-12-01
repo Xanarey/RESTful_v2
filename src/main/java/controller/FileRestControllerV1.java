@@ -81,7 +81,7 @@ public class FileRestControllerV1 extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) {
         doPost(request, response);
-    }
+    } // TODO НЕ ОБНОВЛЯЕТ
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
@@ -90,6 +90,6 @@ public class FileRestControllerV1 extends HttpServlet {
 
         File deleteFile = new File(url);
         if( deleteFile.exists() )
-            deleteFile.delete() ;
+            deleteFile.delete() ; // TODO не удаляет
     }
 }
