@@ -42,10 +42,9 @@ public class EventRestControllerV1 extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Event event = (Event) JsonConverter.getObjectFromJsonString(request, Event.class);
-        Event currentEvent = eventService.getById(Long.valueOf(RequestParser.requestParser(request).toString()));
-        event.setId(currentEvent.getId());
-        event.setUser(currentEvent.getUser());// TODO не работает как нужно
-        event.setFile(currentEvent.getFile());// TODO не работает как нужно
+        Event eventCurrent = eventService.getById(event.getId());
+        event.setUser(eventCurrent.getUser());
+        event.setFile(eventCurrent.getFile());
         eventService.updateEvent(event);
     }
 

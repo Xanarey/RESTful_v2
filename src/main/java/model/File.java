@@ -21,6 +21,7 @@ public class File {
 
     @ToString.Exclude
     @OneToOne(
+            cascade = CascadeType.ALL,
             mappedBy = "file")
     private Event event;
 }

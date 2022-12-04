@@ -48,8 +48,7 @@ public class HibernateFileRepoImpl implements FileRepo {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()){
             transaction = session.beginTransaction();
-            File mergeFile = session.merge(file);
-            file = mergeFile;
+            file = session.merge(file);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null)

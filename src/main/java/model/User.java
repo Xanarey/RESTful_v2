@@ -20,10 +20,9 @@ public class User {
     private String name;
 
     @ToString.Exclude
-    @OneToMany(
+    @OneToMany(cascade = CascadeType.MERGE,
             mappedBy = "user",
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
+            fetch = FetchType.EAGER)
     private List<Event> events;
 
 }
