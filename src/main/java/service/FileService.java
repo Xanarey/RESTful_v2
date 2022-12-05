@@ -8,7 +8,15 @@ import java.util.List;
 
 public class FileService {
 
-    private final FileRepo fileRepo = new HibernateFileRepoImpl();
+    private final FileRepo fileRepo;
+
+    public FileService() {
+        fileRepo = new HibernateFileRepoImpl();
+    }
+
+    public FileService(FileRepo fileRepo) {
+        this.fileRepo = fileRepo;
+    }
 
     public File getById(Long id) {
         return fileRepo.getById(id);

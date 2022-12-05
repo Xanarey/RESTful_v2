@@ -8,7 +8,15 @@ import java.util.List;
 
 public class UserService {
 
-    private final UserRepo userRepo = new HibernateUserRepoImpl();
+    private final UserRepo userRepo;
+
+    public UserService() {
+        userRepo = new HibernateUserRepoImpl();
+    }
+
+    public UserService(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     public User getById(Long id) {return userRepo.getById(id);}
 

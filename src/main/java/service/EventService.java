@@ -8,7 +8,15 @@ import java.util.List;
 
 public class EventService {
 
-    private final EventRepo eventRepo = new HibernateEventRepoImpl();
+    private final EventRepo eventRepo;
+
+    public EventService() {
+        eventRepo = new HibernateEventRepoImpl();
+    }
+
+    public EventService(EventRepo eventRepo) {
+        this.eventRepo = eventRepo;
+    }
 
     public Event getById(Long id) {
         return eventRepo.getById(id);
