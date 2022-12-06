@@ -11,7 +11,7 @@ public class HibernateUtil {
 
     public static Session getSession() {return getSessionFactory().openSession();}
 
-    private static SessionFactory getSessionFactory() {return buildSessionFactory();}
+    public static SessionFactory getSessionFactory() {return buildSessionFactory();}
 
     private static SessionFactory buildSessionFactory() {
         try {

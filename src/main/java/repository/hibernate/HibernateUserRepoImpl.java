@@ -14,7 +14,7 @@ public class HibernateUserRepoImpl implements UserRepo {
     @Override
     public User getById(Long id) {
         try(Session session = HibernateUtil.getSession()) {
-            return session.get(User.class, id);
+            return (User) session.createQuery("SELECT d FROM User d JOIN FETCH d.events WHERE d.id = (:id)").setParameter("id", id).getSingleResult();
         }
     }
 

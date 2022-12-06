@@ -3,6 +3,7 @@ package model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,7 +23,7 @@ public class User {
     @ToString.Exclude
     @OneToMany(cascade = CascadeType.MERGE,
             mappedBy = "user",
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     private List<Event> events;
 
 }
