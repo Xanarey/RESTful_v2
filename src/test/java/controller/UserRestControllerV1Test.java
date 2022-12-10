@@ -3,13 +3,18 @@ package controller;
 import lombok.SneakyThrows;
 import model.User;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import service.UserService;
+import utils.JsonConverter;
 import utils.RequestParser;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +24,16 @@ public class UserRestControllerV1Test extends Mockito{
 
     @Mock
     private UserService userService;
+    private UserRestControllerV1 userRestControllerV1;
     private final HttpServletRequest request = mock(HttpServletRequest.class);
     private final HttpServletResponse response = mock(HttpServletResponse.class);
+
+    public UserRestControllerV1Test() {
+        MockitoAnnotations.openMocks(this);
+        this.userRestControllerV1 = new UserRestControllerV1(userService);
+    }
+
+    @BeforeEach// проверить конвертер
 
     @SneakyThrows
     @Test
@@ -65,10 +78,23 @@ public class UserRestControllerV1Test extends Mockito{
             d = userService.getById(3L);
 
         assertEquals(c, d);
+
+
     }
 
     @Test
-    public void doPost() {
+    public void doPost() throws IOException {
+        User a = new User();
+        a.setId(1L);
+        a.setName("Tom");
+
+
+
+        String jsonString = JsonConverter.getJsonStringFromObject(a);
+
+        when(JsonConverter.getObjectFromJsonString(request, User.class)).thenReturn(a); // как запихнуть строку в реквест ?
+
+
     }
 
     @Test

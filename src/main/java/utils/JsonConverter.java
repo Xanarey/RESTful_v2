@@ -1,6 +1,7 @@
 package utils;
 
 import com.google.gson.Gson;
+import model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,5 +35,10 @@ public class JsonConverter {
         String con = String.valueOf(content);
         return GSON.fromJson(con, (Type) object);
     }
+
+    public static String getJsonStringFromObject(Object object) throws IOException {
+        return GSON.toJson(object);
+    }
+
 
 }
