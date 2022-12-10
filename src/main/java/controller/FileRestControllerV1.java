@@ -8,6 +8,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import service.EventService;
 import service.FileService;
 import utils.FileHelper;
+import utils.JsonConverter;
 import utils.RequestParser;
 
 import javax.servlet.annotation.WebServlet;
@@ -34,11 +35,11 @@ public class FileRestControllerV1 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         StringBuilder stringBuilder = RequestParser.requestParser(request);
+        List<FileDto> fileDtoList = new ArrayList<>();
         if (stringBuilder.toString().equals("*")) {
-            List<String> list = new ArrayList<>();
             for (model.File file: fileService.getAllFiles())
-                list.add(FileDto.getEntity(file).getUrl());
-            response.getWriter().println(list);
+                fileDtoList.add(FileDto.getEntity(file));
+            JsonConverter.getJsonStringFromObject(response, fileDtoList);
         } else {
             FileDto fileDto = FileDto.getEntity(fileService.getById(Long.parseLong(stringBuilder.toString())));
             response.getWriter().println(fileDto.getUrl());

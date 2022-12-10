@@ -21,7 +21,8 @@ public class File {
 
     @ToString.Exclude
     @OneToOne(
-            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.MERGE,
             mappedBy = "file")
     private Event event;
 }

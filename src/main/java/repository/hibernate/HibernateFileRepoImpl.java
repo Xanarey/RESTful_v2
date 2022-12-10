@@ -1,6 +1,7 @@
 package repository.hibernate;
 
 import model.File;
+import model.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import repository.FileRepo;
@@ -14,7 +15,7 @@ public class HibernateFileRepoImpl implements FileRepo {
     @Override
     public File getById(Long id) {
         try(Session session = HibernateUtil.getSession()) {
-            return session.get(File.class, id);
+            return (File) session.createQuery("SELECT d FROM File d JOIN FETCH d.event WHERE d.id = (:id)").setParameter("id", id).getSingleResult();
         }
     }
 

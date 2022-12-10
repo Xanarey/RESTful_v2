@@ -22,14 +22,14 @@ public class Event {
     private String updated;
 
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @ToString.Exclude
     @OneToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.MERGE)
     @JoinColumn(name = "file_id")
     private File file;
 
